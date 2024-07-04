@@ -17,102 +17,88 @@
 
 <div class="row">
 
-<div class="col-md-4 col-sm-4">
-
-<div class="box box-primary">
-
-  <div class="box-header with-border">
-    <!--h3 class="box-title">&nbsp;Times</h3-->
-  </div>
-  <!-- /.box-header -->
-
-	<div class="box-body">
-
-  	<!--input type="hidden" name="_method" value="PUT"-->
+<div class="col-md-5 col-sm-5">
 
     {!! csrf_field() !!}
 
-    <div class="form-group">
-        <label for="times" class="col-sm-3 control-label ">Parcelas</label>
-        <div class="col-lg-9">
+    <div class="row">
+      <div class="col-4">
+        <div class="form-group">
+          <label for="times" class="control-label">Parcelas</label>
           <?php echo $parcelas; ?>
         </div>
-    </div>
-
-    <div class="form-group">
-        <label for="cards" class="col-sm-3 control-label ">Cartões</label>
-        <div class="col-lg-9">
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <label for="cards" class="control-label">Cartões</label>
           <?php echo $cartoes; ?>
         </div>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <label for="id_day" class="control-label">Dia</label>
+          <input type='number' class="form-control" name='id_day' id='id_day' value='<?php echo $id_day; ?>' placeholder='day' />
+        </div>
+      </div>
     </div>
-
-    <div class="form-group">
-        <label for="year" class="col-sm-3 control-label text-nowrap ">Iniciar Ano</label>
-        <div class="col-lg-9">
+    <div class="row">
+      <div class="col-4">
+        <div class="form-group">
+          <label for="year" class="control-label text-nowrap ">Iniciar Ano</label>
           <?php echo $years; ?>
         </div>
-    </div>
-
-    <div class="form-group">
-        <label for="year" class="col-sm-3 control-label text-nowrap ">Iniciar Mês</label>
-        <div class="col-lg-9">
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <label for="year" class="control-label text-nowrap ">Iniciar Mês</label>
           <?php echo $months; ?>
         </div>
+      </div>
+      <div class="col-4">
+      </div>
     </div>
-
-    <div class="form-group">
-        <label for="ds_category" class="col-sm-3 control-label ">Descrição</label>
-        <div class="col-lg-9">
-          <input type='text' style="width: 200px;" class="form-control" name='ds_category' id='ds_category' value='<?php echo $descricao; ?>' placeholder='ds_category' />
-          <input type='hidden' name='ds_subcategory' id='ds_subcategory' value='' placeholder='ds_subcategory' />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="id_category" class="col-sm-3 control-label">Categoria</label>
-        <div class="col-lg-9">
+    <div class="row">
+      <div class="col-4">
+        <div class="form-group">
+          <label for="id_category" class="control-label">Categoria</label>
           <?php echo $categories; ?>
         </div>
-    </div>
-
-    <div class="form-group">
-        <label for="id_category" class="col-sm-3 control-label text-nowrap ">Valor Total</label>
-        <div class="col-lg-9">
-          <input type='text' class="form-control" style='text-align: right; width: 200px;' name='vl_entry' id='vl_entry' value='<?php echo $vlTotal; ?>'  placeholder='vl_entry' />
+      </div>
+      <div class="col-8">
+        <div class="form-group">
+          <label for="ds_category" class="control-label">Descrição</label>
+          <input type='text' class="form-control" name='ds_category' id='ds_category' value='<?php echo $descricao; ?>' placeholder='ds_category' />
+          <input type='hidden' name='ds_subcategory' id='ds_subcategory' value='' placeholder='ds_subcategory' />
         </div>
+      </div>
     </div>
-
-    <input type="hidden" name="acao" id="acao" value="salvar" />
-
-    <div class="form-group">
-      <label class="col-sm-3 control-label text-nowrap"></label>
-      <div class="col-lg-9">
-        <input type="button" value="Gerar Parcelas" id="form-parcelas" class="btn btn-primary" />
+    <div class="row">
+      <div class="col-4">
+        <div class="form-group">
+          <label for="vl_entry" class="control-label text-nowrap">Valor Total</label>
+          <input type='text' class="form-control" style='text-align: right;' name='vl_entry' id='vl_entry' value='<?php echo $vlTotal; ?>'  placeholder='vl_entry' />
+        </div>
+      </div>
+      <div class="col-8">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <input type="hidden" name="acao" id="acao" value="salvar" />
+          <label class="control-label text-nowrap"></label>
+          <input type="button" value="Gerar Parcelas" id="form-parcelas" class="btn btn-primary" style="margin-top: 10px;"/>
+        </div>
+      </div>
+      <div class="col-6">
       </div>
     </div>
 
-  </div> <!--div class="box-body"-->
+  </div> <!--div class="col-xs-4"-->
 
-</div> <!--div class="box box-primary"-->
+<div class="col-md-7 col-sm-7">
 
-</div> <!--div class="col-xs-4"-->
-
-<div class="col-md-8 col-sm-8">
-
-<div class="box box-default">
-
-    <div class="box-header with-border">
-      <!--h3 class="box-title">&nbsp;Times</h3-->
-      <div class="box-tools pull-right">
-        <div class="input-group input-group-sm" style="width: 10px;">
-          <div class="input-group-btn">
-            <input type="button" value="Recalcular" style="display: none;" id="form-calcula" class="btn btn-primary" />
-          </div>
-        </div>
-      </div><!-- /.box-tools -->
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
+      <input type="button" value="Recalcular" style="display: none; float: right;margin-top: 20px;" id="form-calcula" class="btn btn-primary" />
 
       <table id="grid" class="table table-striped table-hover ">
         <thead>
@@ -133,10 +119,6 @@
         <button id="submitp" class="btn btn-primary button_submit">Save changes</button>
       </div>
 
-    </div> <!--div class="box-body"-->
-
-</div> <!--div class="box box-default"-->
-
 </div> <!--div class="col-xs-8"-->
 
 </div> <!--div class="row"-->
@@ -154,12 +136,33 @@
 <script>
   $(function () {
 
+    let mcards = [
+    <?php 
+    $icont = 0;
+    foreach($cartoesx as $cartx) { 
+      echo ($icont == 0 ? "{ " : ",\n{ "); 
+      echo "\"id\": \"" . $cartx['id'] . "\", ";
+      echo "\"nome\": \"" . $cartx['nome'] . "\", ";
+      echo "\"dia\": \"" . $cartx['dia'] . "\", ";
+      echo "\"day\": " . $cartx['day'] . " ";
+      echo "} ";
+      $icont += 1;
+    } 
+    ?>
+    ];
+
     $('#id_category').on('change', function() {
         $('#lastdscategory input:hidden[id=id_category]').val( $(this).val() );
         lastDsCategory();
     });
 
-    var lastDsCategory = function( ) {
+    $('#cards').on('change', function() {
+        var iCard = $(this).val();
+        var sDay = mcards.find(carx => carx.id === iCard);
+        $('#id_day').val(sDay.day);
+    });
+
+    var lastDsCategory = function() {
         $.ajax({
             type: 'GET',
             dataType: 'json',
@@ -192,15 +195,24 @@
     $('#form-calcula').on('click', function() {
         var $valor = 0.0;
         var $fParcela = 0.0;
+        var $sCartao = $('#fparcela select[id=cards]').val();
         var $sParcela = $('#fparcela select[id=times]').val();
         var $sVlTotal = $('#fparcela input:text[id=vl_entry]').val();
         for (var $x=1; $x<=$sParcela; $x++) {
-            //$fParcela = roundTo2Decimals($('#fparcela input:text[id=vlParcela_'+$x+']').val());
             $fParcela = roundTo2Decimals($('#vlParcela_'+$x+'').val());
             $valor += parseFloat($fParcela);
         }
-        //$('#fparcela input:text[id=total]').val(roundTo2Decimals($valor));
         $('#total').val(roundTo2Decimals($valor));
+        if ($sCartao == "Crédito") { 
+          if ($sVlTotal < 0.0) {
+            $sVlTotal = $sVlTotal * -1;
+          }
+        } 
+        if ($sCartao == "Débito") { 
+          if ($sVlTotal >= 0.0) {
+            $sVlTotal = $sVlTotal * -1;
+          }
+        } 
         $('#martelo').val(roundTo2Decimals($sVlTotal - $valor));
         return true;
     });
@@ -228,12 +240,32 @@
         var $sVlParcela = roundTo2Decimals($sVlTotal / $sParcela);
         var $sDescricao = $('#fparcela input:text[id=ds_category]').val();
         var $fVlParcela = 'R$ ' + parseFloat($sVlParcela, 10).toFixed($digitos).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString();
-        var $sDia = "15";
+        var $iDay = 0;
+        var $sDia = "0";
         var $iMonth = $sMonth;
         var $iYear = $sYear;
 
-        if ($sCartao == "Visa") $sDia = "08";
-        if ($sCartao == "Hering") $sDia = "20";
+        if ($sCartao == "Visa")       { $sDia = "08"; $iDay = 8;  } 
+        if ($sCartao == "Mastercard") { $sDia = "15"; $iDay = 15; } 
+        if ($sCartao == "Hering")     { $sDia = "20"; $iDay = 20; } 
+        if ($sCartao == "Crédito")    { $sDia = "0"; $iDay = 0;   } 
+        if ($sCartao == "Débito")     { $sDia = "0"; $iDay = 0;   } 
+
+        if ($iDay == 0) {
+          $iDay = $('#id_day').val();
+          $iDay = ($iDay <= 0 ? 5 : $iDay);
+          $sDia = ($iDay < 10 ? '0' : '') + '' + $iDay;
+          if ($sCartao == "Crédito") { 
+            if ($sVlParcela < 0.0) {
+              $sVlParcela = $sVlParcela * -1;
+            }
+          } 
+          if ($sCartao == "Débito") { 
+            if ($sVlParcela >= 0.0) {
+              $sVlParcela = $sVlParcela * -1;
+            }
+          } 
+        }
 
         $('#grid tr:gt(0)').remove();
         
@@ -259,9 +291,7 @@
             $dataH += "<input type='hidden' name='descricao_" + $x + "' value='" + $xDescricao + "' />";
             $dataH += "</td>";
             $dataH += "</tr>";
-
             $total += roundTo2Decimals($sVlParcela);
-
             $("#grid").append($dataH);
         }
 
@@ -277,6 +307,17 @@
         $dataH += "</td>";
         $dataH += "</tr>";
         $("#grid").append($dataH);
+
+        if ($sCartao == "Crédito") { 
+          if ($sVlTotal < 0.0) {
+            $sVlTotal = $sVlTotal * -1;
+          }
+        } 
+        if ($sCartao == "Débito") { 
+          if ($sVlTotal >= 0.0) {
+            $sVlTotal = $sVlTotal * -1;
+          }
+        } 
 
         var $resto = roundTo2Decimals($sVlTotal - $total);
 

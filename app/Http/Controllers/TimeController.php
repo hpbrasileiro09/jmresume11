@@ -67,14 +67,17 @@ class TimeController extends Controller
 
         $alert = MontaAlert();
 
-        $cartoes = Array();
-        $cartoes[] = Array( 'id' => 'Mastercard', 'nome' => 'Mastercard', 'dia' => '15' );
-        $cartoes[] = Array( 'id' => 'Visa',       'nome' => 'Visa',       'dia' => '8'  );
-        $cartoes[] = Array( 'id' => 'Hering',     'nome' => 'Hering',     'dia' => '20' );
+        $cartoesx = Array();
+        $cartoesx[] = Array( 'id' => 'Mastercard', 'nome' => 'Mastercard', 'dia' => '15', 'day' => 15 );
+        $cartoesx[] = Array( 'id' => 'Visa',       'nome' => 'Visa',       'dia' => '8',  'day' => 8 );
+        $cartoesx[] = Array( 'id' => 'Hering',     'nome' => 'Hering',     'dia' => '20', 'day' => 20 );
+        $cartoesx[] = Array( 'id' => 'Crédito',    'nome' => 'Crédito',    'dia' => '0',  'day' => 0 );
+        $cartoesx[] = Array( 'id' => 'Débito',     'nome' => 'Débito',     'dia' => '0',  'day' => 0 );
 
-        $cartoes = MontaCartoes($cartoes,'Mastercard');
+        $cartoes = MontaCartoes($cartoesx,'Mastercard');
+        $id_day = "15";
 
-        $vlTotal = 120.0;
+        $vlTotal = -120.0;
         //$vlTotal = number_format($vlTotal, 2, '.', '.');
         $descricao = 'Teste';
 
@@ -85,10 +88,12 @@ class TimeController extends Controller
                 'categories', 
                 'parcelas',
                 'cartoes',
+                'cartoesx',
                 'years',
                 'months',
                 'page_header',
-                'alert'
+                'alert',
+                'id_day'
             ));
 
     }
@@ -107,6 +112,8 @@ class TimeController extends Controller
         $checked = 0;
         $published = 1;
 
+        $xgrava = 1;
+
         $ano = 0;
         $mes = 0;
         $hora = date("H:i:s");
@@ -117,15 +124,18 @@ class TimeController extends Controller
         $acao = (string) $request->input('acao');
 
         $cartoes = Array();
-        $cartoes[] = Array( 'id' => 'Mastercard', 'nome' => 'Mastercard', 'dia' => '15' );
-        $cartoes[] = Array( 'id' => 'Visa',       'nome' => 'Visa',       'dia' => '8'  );
-        $cartoes[] = Array( 'id' => 'Hering',     'nome' => 'Hering',     'dia' => '20' );
+        $cartoes[] = Array( 'id' => 'Mastercard', 'nome' => 'Mastercard', 'dia' => '15', 'day' => 15 );
+        $cartoes[] = Array( 'id' => 'Visa',       'nome' => 'Visa',       'dia' => '8',  'day' => 8 );
+        $cartoes[] = Array( 'id' => 'Hering',     'nome' => 'Hering',     'dia' => '20', 'day' => 20 );
+        $cartoes[] = Array( 'id' => 'Crédito',    'nome' => 'Crédito',    'dia' => '0',  'day' => 0 );
+        $cartoes[] = Array( 'id' => 'Débito',     'nome' => 'Débito',     'dia' => '0',  'day' => 0 );
 
         if ($acao == 'salvar') 
         {
 
             $id_category    = $request->input('id_category');
             $card           = $request->input('cards');
+            $id_day         = $request->input('id_day');
             $times          = $request->input('times');
             $vl_entry       = $request->input('vl_entry');
             $ds_category    = "";
@@ -137,19 +147,49 @@ class TimeController extends Controller
                     $dia = $v['dia'];
                 }
             }
-            
+
+            if (strlen($id_day) <= 0) $id_day = 5;
+            $id_day = ($id_day <= 0 ? 5 : $id_day);
+
+            if ($card == "Crédito") {
+                $dia = (strlen($id_day) >= 10 ? '' : '0') . $id_day;
+            }
+
+            if ($card == "Débito") {
+                $dia = (strlen($id_day) >= 10 ? '' : '0') . $id_day;
+            }
+
+            $xval = Array();
+
             for ($x = 1; $x <= $times; $x++) 
             {
-            
+                
                 $vl_entry    = $request->input('vlParcela_'.$x);
                 $ds_category = $request->input('descricao_'.$x);
                 $dt_entry    = $ano . '-' . $mes . '-' . $dia . ' ' . $hora;
-            
-                if ($vl_entry >= 0) {
-                    $vl_entry = ($vl_entry * -1);
+                
+                $xcalc = 1;
+                if ($card == "Crédito") {
+                    if ($vl_entry < 0) {
+                        $vl_entry = ($vl_entry * -1);
+                    }
+                    $xcalc = 0;
                 }
-            
-                $_reg = Entry::create([
+    
+                if ($card == "Débito") {
+                    if ($vl_entry >= 0) {
+                        $vl_entry = ($vl_entry * -1);
+                    }
+                    $xcalc = 0;
+                }
+
+                if ($xcalc == 1) {
+                    if ($vl_entry >= 0) {
+                        $vl_entry = ($vl_entry * -1);
+                    }
+                }
+
+                $_mval = [
                     'id_category' => $id_category,
                     'dt_entry' => $dt_entry,
                     'vl_entry' => $vl_entry,
@@ -159,7 +199,13 @@ class TimeController extends Controller
                     'fixed_costs' => $fixed_costs,
                     'checked' => $checked,
                     'published' => $published,
-                ]);
+                ];
+
+                $xval[] = $_mval;
+                
+                if ($xgrava == 1) {
+                    $_reg = Entry::create($_mval);
+                }
 
                 $mes++;
 
@@ -178,11 +224,12 @@ class TimeController extends Controller
 
         }        
 
-        return redirect($this->path_view);
+        //return redirect($this->path_view);
 
         return [
             'message' => 'OK',
-            'request' => $request->all(),
+            //'request' => $request->all(),
+            'xval' => $xval,
         ];        
 
     }

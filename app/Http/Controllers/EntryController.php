@@ -607,4 +607,209 @@ class EntryController extends Controller
 
     }
 
+    public function montaSqlCat()
+    {
+        $query = "";
+        $query .= "SELECT ";
+	    $query .= "  Y.`id`, ";
+        $query .= "  Y.`name` AS `category_nm`, ";
+        $query .= "  Y.`vl_prev`, ";
+        $query .= "  Y.`day_prev`, ";
+        $query .= "  Y.`ordem` AS `order`, ";
+        $query .= "  Y.`type` AS `category_tp` ";
+        $query .= "FROM ";
+        $query .= "  `categories` Y ";
+        return $query;
+    }
+
+    public function montaSqlAll($iyear)
+    {
+        $query = "";
+        $query .= "SELECT ";
+        $query .= "  X.`id`, ";
+        $query .= "  X.`id_category`, ";
+        $query .= "  X.`dt_entry`, ";
+        $query .= "  COALESCE(DATE_FORMAT(X.`dt_entry`, '%d/%m/%Y'),'') AS `dt_entry_br`, "; 
+        $query .= "  year(X.`dt_entry`) AS `ano`, ";
+        $query .= "  month(X.`dt_entry`) AS `mes`, ";
+        $query .= "  day(X.`dt_entry`) AS `dia`, ";
+        $query .= "  X.`vl_entry`, ";
+        $query .= "  X.`nm_entry`, ";
+        $query .= "  X.`ds_category`, ";
+        $query .= "  X.`ds_subcategory`, ";
+        $query .= "  X.`status`, ";
+        $query .= "  X.`fixed_costs`, ";
+        $query .= "  X.`checked`, ";
+        $query .= "  X.`published`, ";
+        $query .= "  X.`ds_detail`, ";
+        $query .= "  X.`created_at`, ";
+        $query .= "  X.`updated_at`, ";
+        $query .= "  Y.`name` AS `nm_category`, ";
+        $query .= "  Y.`vl_prev`, ";
+        $query .= "  Y.`day_prev`, ";
+        $query .= "  Y.`ordem` AS `order`, ";
+        $query .= "  Y.`type` AS `tp_category` ";
+        $query .= "FROM ";
+        $query .= "  `entries` X ";
+        $query .= "  LEFT JOIN `categories` Y ON Y.`id` = X.`id_category` ";
+        $query .= "WHERE ";
+        $query .= "  X.`status` = 1 ";
+        $query .= "  AND X.`dt_entry` >= '2009-12-20 00:00:00' ";
+        if ($iyear != 0) { $query .= "  AND YEAR(X.`dt_entry`) = " . $iyear . " "; }
+        $query .= "ORDER BY ";
+        $query .= "  X.`dt_entry` ASC ";
+        return $query;
+    }
+
+    public function entries_csv() {
+
+        $headers = [
+          'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
+          'Content-type'        => 'text/csv',
+          'Content-Disposition' => 'attachment; filename=nowentries.csv',
+          'Expires'             => '0',
+          'Pragma'              => 'public'
+        ];
+ 
+        $search = \Request::get('search');
+ 
+        $_param = Param::findOrFail(1);
+ 
+        $agorax = $_param->value;
+ 
+        $query = $this->montaSql($agorax, $search);
+ 
+        $result = DB::connection('mysql')->select($query);
+ 
+        $list = [];
+        foreach($result as $row)
+        {
+           $list[] = (array) $row;
+        }
+ 
+        array_unshift($list, array_keys($list[0]));
+ 
+        $callback = function() use ($list)
+        {
+           $FH = fopen('php://output', 'w');
+           foreach ($list as $row) {
+              fputcsv($FH, $row);
+           }
+           fclose($FH);
+        };
+ 
+        return response()->stream($callback, 200, $headers);
+ 
+    }
+
+    public function all_entries_csv() {
+
+        $iyear = 0;
+            $year = \Request::get('year');
+        if (isset($year)) {
+           $iyear = $year;
+        }
+    
+           $headers = [
+             'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
+             'Content-type'        => 'text/csv',
+             'Content-Disposition' => 'attachment; filename=entries.csv',
+             'Expires'             => '0',
+             'Pragma'              => 'public'
+           ];
+    
+           $query = $this->montaSqlAll($iyear);
+    
+           $result = DB::connection('mysql')->select($query);
+    
+           $list = [];
+           foreach($result as $row)
+           {
+              $list[] = (array) $row;
+           }
+    
+           array_unshift($list, array_keys($list[0]));
+    
+           $callback = function() use ($list)
+           {
+              $FH = fopen('php://output', 'w');
+              foreach ($list as $row) {
+                 fputcsv($FH, $row);
+              }
+              fclose($FH);
+           };
+    
+           return response()->stream($callback, 200, $headers);
+    
+        }
+
+        public function categories_arr() 
+        {
+            $skip = "0";
+            $limit = "1000";
+            if (\Request::has("skip") == true) {
+                $skip = \Request::get("skip");
+            }
+            if (\Request::has("limit") == true) {
+                $limit = \Request::get("limit");
+            }
+            $pagination = "LIMIT " . $skip . ", " . $limit;
+            $query = "";
+            $query .= "SELECT ";
+            $query .= "`id`, ";
+            $query .= "`name`, ";
+            $query .= "`published`, ";
+            $query .= "`vl_prev`, ";
+            $query .= "`day_prev`, ";
+            $query .= "`ordem`, ";
+            $query .= "`type`, ";
+            $query .= "`created_at`, ";
+            $query .= "`updated_at` ";
+            $query .= "FROM ";
+            $query .= "`categories` ";
+            $query .= $pagination;
+            $registers = DB::connection('mysql')->select($query);
+            $total = DB::connection('mysql')->select('SELECT count(*) AS `total` FROM `categories`')[0]->total;
+                $resume = Array(
+                    'registers' => $registers,
+                    'total' => $total
+                );
+            return $resume;
+        }
+        
+        public function all_categories_csv() {
+    
+           $headers = [
+             'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
+             'Content-type'        => 'text/csv',
+             'Content-Disposition' => 'attachment; filename=categories.csv',
+             'Expires'             => '0',
+             'Pragma'              => 'public'
+           ];
+    
+           $query = $this->montaSqlCat();
+    
+           $result = DB::connection('mysql')->select($query);
+    
+           $list = [];
+           foreach($result as $row)
+           {
+              $list[] = (array) $row;
+           }
+    
+           array_unshift($list, array_keys($list[0]));
+    
+           $callback = function() use ($list)
+           {
+              $FH = fopen('php://output', 'w');
+              foreach ($list as $row) {
+                 fputcsv($FH, $row);
+              }
+              fclose($FH);
+           };
+    
+           return response()->stream($callback, 200, $headers);
+    
+        }
+
 }
