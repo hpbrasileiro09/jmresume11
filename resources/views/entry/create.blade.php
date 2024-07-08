@@ -1,5 +1,8 @@
 <x-app-layout>
 
+<div class="row">
+<div class="col-6">
+
 <div class="card mt-5" style="background-color: lightgreen;">
   <h2 class="card-header">New Entry</h2>
   <div class="card-body">
@@ -17,6 +20,11 @@
     </form> 
   </div>
 </div>
+
+</div> <!--div class="col-X"-->
+<div class="col-6">
+</div>
+</div> <!--div class="row"-->
 
 <script>
   $(function () {

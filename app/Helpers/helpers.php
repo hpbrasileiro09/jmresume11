@@ -136,10 +136,19 @@ function limpaFone($string) {
     return trim($string);
 }
 
-function dateToMysql($origem='', $hour=0) {
+function dateToMysql($origem, $hour) {
     $resp = date('Y-m-d H:i:s');
     if (strlen($origem) == 19) {
         $resp = substr($origem, 6, 4) . "-" . substr($origem, 3, 2) . "-" . substr($origem, 0, 2);
+        if ($hour == 1) $resp .= " " . substr($origem, 11, 8);
+    }
+    return $resp;
+}
+
+function dateToMysqlX($origem, $hour) {
+    $resp = date('Y-m-d H:i:s');
+    if (strlen($origem) == 19) {
+        $resp = substr($origem, 0, 10);
         if ($hour == 1) $resp .= " " . substr($origem, 11, 8);
     }
     return $resp;
@@ -510,16 +519,14 @@ function trataValorB($pvalor)
 
 function trataValorA($pvalor, $ano, $mes, $cat, $deb=0, $vl_prev=0)
 {
-  $path = 'http://'.$_SERVER['HTTP_HOST'].'/reports/lupa?ano='.$ano.'&mes='.$mes.'&cat='.$cat.'&deb='.$deb;
-  //$path = 'http://127.0.0.1:8888/dev1/public' . '/reports/lupa?ano='.$ano.'&mes='.$mes.'&cat='.$cat.'&deb='.$deb;
+  $path = 'http://'.$_SERVER['HTTP_HOST'].'/jmresume11/public/reports/lupa?ano='.$ano.'&mes='.$mes.'&cat='.$cat.'&deb='.$deb;
   $resp = number_format($pvalor, 2, ',', '.');
   $cor = "green";
   if ($pvalor < 0) $cor = "red";
   if ($vl_prev) $cor = "blue";
   if ($pvalor == 0) $resp = "-";
   $_return = "<font style='float: right; font-size:11px;' color='" . $cor . "'>" . $resp . "</font>"; 
-  //if (!$vl_prev) $_return = '<a href="'.$path.'">'.$_return.'</a>';
-  if (!$vl_prev) $_return = '<a href="#myModalX" path="'.$path.'" role="button" data-toggle="modal">'.$_return.'</a>';      
+  if (!$vl_prev) $_return = '<a href="#myModalX" path="'.$path.'" role="button" data-bs-toggle="modal" data-bs-target="#myModalX">'.$_return.'</a>';      
   return $_return;
 }
 

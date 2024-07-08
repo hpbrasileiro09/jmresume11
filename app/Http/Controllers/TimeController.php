@@ -224,12 +224,12 @@ class TimeController extends Controller
 
         }        
 
-        //return redirect($this->path_view);
+        return redirect($this->path_view);
 
         return [
             'message' => 'OK',
-            //'request' => $request->all(),
             'xval' => $xval,
+            //'request' => $request->all(),
         ];        
 
     }

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Response;
+
 use App\Http\Requests;
 
 use Carbon\Carbon;
@@ -330,10 +332,7 @@ class ReportController extends Controller
 
         $entries = DB::connection('mysql')->select($query);
 
-        return view($this->path_view . '.lupa', 
-            compact(
-                'entries'
-            ));    
+        return Response::json($entries, 200);
 
     }
 

@@ -91,7 +91,7 @@ class EntryController extends Controller
 
         $published = getPublished();
 
-        $register->dt_entry = Carbon::now()->format('d/m/Y');
+        $register->dt_entry = Carbon::now()->format('Y-m-d');
 
         $register->status = 1;
         $register->published = 1;
@@ -114,7 +114,7 @@ class EntryController extends Controller
 
         $_reg = Entry::create([
             'id_category' => $request->input('id_category'),
-            'dt_entry' => inverteData($request->input('dt_entry'),0),
+            'dt_entry' => $request->input('dt_entry'), //inverteData($request->input('dt_entry'),0),
             'vl_entry' => $request->input('vl_entry'),
             'nm_entry' => $request->input('nm_entry'),
             'ds_category' => $request->input('ds_category'),
@@ -170,7 +170,7 @@ class EntryController extends Controller
 
         $published = getPublished();
 
-        $register->dt_entry = mysqlToDateBr($register->dt_entry);
+        $register->dt_entry = dateToMySqlX($register->dt_entry,0);
 
         return view($this->path_view . '.edit', 
             compact('register', 'categories', 'published', 'page_header'));        
@@ -191,7 +191,7 @@ class EntryController extends Controller
         $register = Entry::findOrFail($id);
 
         $register->id_category = $request->input('id_category');
-        $register->dt_entry = inverteData($request->input('dt_entry'),0);
+        $register->dt_entry = $request->input('dt_entry'); //inverteData($request->input('dt_entry'),0);
         $register->vl_entry = $request->input('vl_entry');
         $register->nm_entry = $request->input('nm_entry');
         $register->ds_category = $request->input('ds_category');

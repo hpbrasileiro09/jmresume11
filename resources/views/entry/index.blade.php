@@ -57,7 +57,7 @@
                       $mes = $register->mes;
 
                       $linhas = "";
-                      $linhas .= "<tr class='info'>";
+                      $linhas .= "<tr class='ln-info'>";
                       $linhas .= "<td colspan='8' align='right'>".getMonth($mes)."</td>";
                       $linhas .= "</tr>";
                       echo $linhas;
@@ -74,18 +74,18 @@
 
                   $iblack = 0;
 
-                  if ($i == 0) $_class = "class='success'"; 
+                  if ($i == 0) $_class = "class='ln-success'"; 
                   
                   if ($register->status == 1) {
                       $total += $register->vl_entry;
                   } else {
                       $iblack = 1;
-                      $_class = "class='warning'";
+                      $_class = "class='ln-warning'";
                   }
 
                   if ($register->checked == 1) {
                       $iblack = 2;
-                      $_class = "class='success'";
+                      $_class = "class='ln-success'";
                   }
 
                 ?>
@@ -125,5 +125,17 @@
         
   </div>
 </div>  
+
+<style>
+.ln-warning {
+    background-color: #F6F783;
+}
+.ln-success {
+    background-color: #A2F1D2;
+}
+.ln-info {
+    background-color: #D1D1CC;
+}
+</style>
 
 </x-app-layout>

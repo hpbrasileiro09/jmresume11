@@ -26,15 +26,15 @@
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <form action="{{ route('entry.support') }}" method="GET" role="search">
                   <div class="input-group input-group-sm" style="width: 500px;">
-                    <input type="text" name="search" class="form-control pull-right" value="{{$search}}" placeholder="Search">
+                    <input type="text" name="search" style="margin-right: 5px;" class="form-control pull-right" value="{{$search}}" placeholder="Search">
                     <div class="input-group-btn">
                       <button type="submit" class="btn btn-success"><span data-feather="search"></span></button>
                       <a href="{{ route('entry.support') }}" class="btn btn-danger btn-xs">
                         <span data-feather="refresh-cw"></span>
                       </a>
-                      <a href="#" class="btnSubmit btn btn-primary btn-xs">Perform action</a>
+                      <a href="#" style="margin-right: 5px;" class="btnSubmit btn btn-primary btn-xs">Perform action</a>
                     </div>
-                      <select class="form-control pull-right" name="action_choice" id="action_choice">
+                      <select class="form-select pull-right" name="action_choice" id="action_choice">
                         <option value="1">Update</option>
                         <option value="2">Delete</option>
                       </select>

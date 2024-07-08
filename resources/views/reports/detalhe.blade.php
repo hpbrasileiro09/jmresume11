@@ -500,17 +500,39 @@
               </table>
 
                 <!-- Modal -->
-                <div id="myModalX" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" style="max-width: 100%; max-height: 100%; height: auto; display: table;">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            </div>
-                            <div class="modal-body">
-                                <iframe width="100%" height="100%" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0" id="ifrm" src="#"></iframe>
-                            </div>
-                        </div>
+                <div class="modal fade" id="myModalX" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <div class="modal-body">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <table id="grid" class="table table-striped table-hover">    
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Data</th>
+                                            <th scope="col">Descri&ccedil;&atilde;o</th>
+                                            <th scope="col">Categoria</th>
+                                            <th scope="col"><font style='float: right;'>Valor</font></th>
+                                            <th scope="col"><font style='float: right;'>Total</font></th>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" colspan="5">&nbsp;</td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>                    
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <!--button type="button" class="btn btn-primary">Save changes</button-->
+                    </div>
+                    </div>
+                </div>
                 </div>
                 <!-- Modal -->
 
@@ -524,15 +546,58 @@
 <script>
   $(function () {
 
+    var roundTo2Decimals = function(numberToRound) {
+        return Math.round(numberToRound * 100) / 100;
+    };
+
+    var roundTo2DecimalsX = function(numberToRound) {
+        var valor = "";
+        var resp = Math.round(numberToRound * 100) / 100;
+        x = resp.toString().split('.');
+        if (x.length == 1) {
+            valor = resp.toString() + ".00";
+        } else 
+            valor = resp;
+        return valor;
+    };
+
+    var padDigits = function(number, digits) {
+        return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
+    };  
+
     $("a[href=\\#myModalX]").click(function(ev) {
 
         ev.preventDefault();
 
+        var linhas = "";
+        var total = 0.0;
         var path = $(this).attr("path");
 
-        $('#ifrm').attr('src', path);
+        $('#grid tr:gt(0)').remove();
 
-        $('#ifrm').css('height',$(window).height()*0.6);
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: path,
+            success: function(data) {
+                $.each(data, function(key, value){
+                    total += roundTo2Decimals(value.vl_entry);
+                    linhas = "";
+                    linhas += "<tr>";
+                    linhas += "<td><font style='float: lef; font-size:11px;'>"+value.dt_entry_br+"</font></td>";
+                    linhas += "<td><font style='float: left; font-size:11px;'>"+value.ds_category+"&nbsp;"+value.ds_subcategory+"</font></td>";
+                    linhas += "<td><font style='float: left; font-size:11px;'>"+value.nm_category+"</font></td>";
+                    linhas += "<td><font style='float: right; font-size:11px;'>"+roundTo2DecimalsX(value.vl_entry)+"</font></td>";
+                    linhas += "<td><font style='float: right; font-size:11px;'>"+roundTo2DecimalsX(total)+"</font></td>";
+                    linhas += "</tr>";                      
+                    $("#grid").append(linhas);                    
+                });
+            },       
+            error: function(jqXHR, textStatus, errorThrown) {  
+                //$("#msg").html('failure! please verify');
+                console.log('failure! please verify');
+            }              
+        });         
 
         //$('.modal-content').css('height',$( window ).height()*0.4);
 

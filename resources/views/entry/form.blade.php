@@ -15,7 +15,7 @@
 <div class="row">
 	<div class="col-6">
 		<div class="form-group{{ $errors->has('ds_category') ? ' has-error' : '' }}">
-			<label for="ds_category" class="control-label col-sm-2">Description</label>
+			<label for="ds_category" class="control-label col-sm-3">Description</label>
 			<input type="text" name="ds_category" id="ds_category" class="form-control" value="{{ $register->ds_category }}" placeholder="Description...">
 			@if ($errors->has('ds_category'))
 				<span class="help-block">
@@ -46,7 +46,7 @@
 	<div class="col-6">
 		<div class="form-group{{ $errors->has('enrollment_begin') ? ' has-error' : '' }}">
 			<label for="dt_entry" class="control-label col-sm-2">Date</label>
-			<input type="text" name="dt_entry" id="dt_entry" class="dt_entry form-control pull-right" value="{{ $register->dt_entry }}" placeholder="Date...">
+			<input type="date" name="dt_entry" id="dt_entry" class="dt_entry form-control pull-right" value="{{ $register->dt_entry }}" placeholder="Date...">
 			@if ($errors->has('enrollment_begin'))
 				<span class="help-block">
 					<strong>{{ $errors->first('enrollment_begin') }}</strong>
@@ -85,5 +85,7 @@
 <div class="form-group">
 	<br />
 	<input type="submit" value="Save" class="btn btn-primary" />
+	<a class="btn btn-success" href="{{ route('entry.index') }}">Back</span></a>
 	<div style="float: right;"><b>Confirm create/update?</b>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="confirm" class="form-check-input" value="0">&nbsp;&nbsp;&nbsp;</div>
 </div>
+
