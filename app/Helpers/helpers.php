@@ -154,6 +154,14 @@ function dateToMysqlX($origem, $hour) {
     return $resp;
 }
 
+function dateToMysqlY($origem) {
+    $resp = date('Y-m-d');
+    if (strlen($origem) == 10) {
+        $resp = $origem;
+    }
+    return $resp;
+}
+
 function mysqlToDate($origem='', $hour=0) {
     $resp = date('d-m-Y H:i:s');
     if (strlen($origem) == 19) {
@@ -331,14 +339,11 @@ function trataDate($pdata)
     return $resp;
 }
 
-function getMonth($_month){
-
-    $resp = "-";
-
+function getYearMonths() {
     $_mat = Array();
     $_mat[] = Array( "label" => "Janeiro",   "id" => 1,  "desc" => "tem 31 dias" );
     $_mat[] = Array( "label" => "Fevereiro", "id" => 2,  "desc" => "tem 28 (ou 29 dias nos anos bissextos)" );
-    $_mat[] = Array( "label" => "Mar&ccedil;o",     "id" => 3,  "desc" => "tem 31 dias" );
+    $_mat[] = Array( "label" => "Março",     "id" => 3,  "desc" => "tem 31 dias" );
     $_mat[] = Array( "label" => "Abril",     "id" => 4,  "desc" => "tem 30 dias" );
     $_mat[] = Array( "label" => "Maio",      "id" => 5,  "desc" => "tem 31 dias" );
     $_mat[] = Array( "label" => "Junho",     "id" => 6,  "desc" => "tem 30 dias" );
@@ -348,12 +353,20 @@ function getMonth($_month){
     $_mat[] = Array( "label" => "Outubro",   "id" => 10, "desc" => "tem 31 dias" );
     $_mat[] = Array( "label" => "Novembro",  "id" => 11, "desc" => "tem 30 dias" );
     $_mat[] = Array( "label" => "Dezembro",  "id" => 12, "desc" => "tem 31 dias" );
+    return $_mat;
+}
+
+function getMonth($_month){
+
+    $resp = "-";
+
+    $_mat = getYearMonths();
 
     foreach($_mat as $k => $v) {
-    if ($v["id"] == $_month) {
-        $resp = $v["label"];
-        break;
-    }
+        if ($v["id"] == $_month) {
+            $resp = $v["label"];
+            break;
+        }
     }
 
     return "<font style='font-size:10px;'>" . utf8_encode($resp) . "</font>";
@@ -469,13 +482,13 @@ function MontaAlert($_col="12")
 
     if ($_kind != -1) {
         $html .= "<div class=\"row\">";
-        $html .= "<div class=\"col-md-".$_col." col-sm-".$_col."\">";
-        $html .= "<div id=\"message-alert\" class=\"alert alert-dismissable show ".$_class."\">";
-        $html .= "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>";
-        $html .= "<h4>".$_type."</h4>";
-        $html .= "<p>". $_msg ."</p>";
-        $html .= "</div>";
-        $html .= "</div>";
+        $html .= "   <div class=\"col-md-".$_col." col-sm-".$_col."\">";
+        $html .= "      <div style=\"margin-top: 10px;\" class=\"alert alert-success alert-dismissible show\" role=\"alert\">";
+        $html .= "         <h4>".$_type."</h4>";
+        $html .= "         <p>". $_msg ."</p>";
+        $html .= "         <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button>";
+        $html .= "      </div>";
+        $html .= "   </div>";
         $html .= "</div>";
     }
 

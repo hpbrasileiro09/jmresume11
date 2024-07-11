@@ -1,5 +1,8 @@
 <x-app-layout>
 
+<div class="row">
+<div class="col-6">
+
 <div class="card mt-5" style="background-color: lightgray;">
 	<h2 class="card-header">Entry Detail</h2>
 	<div class="card-body">
@@ -7,6 +10,7 @@
 			<a href="{{ route('entry.index') }}"><span data-feather="dollar-sign"></span></a>
 			<a href="{{ route('entry.support') }}"><span data-feather="tool"></span></a>
 			<a href="{{ route('time.index') }}"><span data-feather="calendar"></span></a>
+			<a href="{{ route('param.edit', 1) }}"><span data-feather="settings"></span></a>
 			<a href="{{ route('entry.create') }}"><span data-feather="plus-square"></span></a>
 		</div>
 		<?php echo $alert; ?>
@@ -28,5 +32,10 @@
 		</div>
 	</div>
 </div>
+
+</div> <!--div class="col-X"-->
+<div class="col-6">
+</div>
+</div> <!--div class="row"-->
 
 </x-app-layout>

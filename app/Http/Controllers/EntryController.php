@@ -277,12 +277,14 @@ class EntryController extends Controller
         
         $search = \Request::get('search');
 
+        $dia = \Request::get('dia');
+
         $page_header = $this->header_view;
 
         $_param = Param::findOrFail(1);
         $agorax = $_param->value;
 
-        $query = $this->montaSql($agorax, $search, false);
+        $query = $this->montaSql($agorax, $search, false, $dia);
 
         $registers = DB::connection('mysql')->select($query);
 
@@ -317,7 +319,8 @@ class EntryController extends Controller
                 'registers',
                 'page_header',
                 'search',
-                'alert'
+                'alert',
+                'dia',
             ));    
 
     }
@@ -441,19 +444,18 @@ class EntryController extends Controller
         $faixaax='0';
         $faixabx='1';
 
-	$query = "";
-	$query .= "SELECT count(*) AS `total` FROM `entries` AS j "; 
-	$query .= "WHERE ";
+	    $query = "";
+	    $query .= "SELECT count(*) AS `total` FROM `entries` AS j "; 
+	    $query .= "WHERE ";
         $query .= "  j.`dt_entry` BETWEEN ";
         $query .= "  Str_to_date(Date_format(ADDDATE('" . $agorax . "',+" . $faixabx . "),'%Y-%m-%d 00:00:00'),";
         $query .= "  Get_format(DATETIME,'iso')) AND '" . $futuro . "' ";
 
-	return $query;
+	    return $query;
     }
 
-    public function montaSql($agorax, $search, $_union = true, $skip = '0', $limit = '500')
+    public function montaSql($agorax, $search, $_union = true, $dia=null)
     {
-    	$pagination = "LIMIT " . $skip . ", " . $limit;
 
         $d = new \DateTime( $agorax );
         $d->modify( 'first day of +24 month' );
@@ -586,6 +588,9 @@ class EntryController extends Controller
             $query .= " j.ds_subcategory LIKE '%" . $search. "%' OR ";
             $query .= " c.name LIKE '%" . $search. "%' ";
             $query .= " ) ";
+            if (strlen($dia)) { 
+                $query .= " AND j.dt_entry BETWEEN '" . $dia . " 00:00:00' AND '" . $dia . " 23:59:59' ";
+            }
         } else {
             $query .= "  j.dt_entry BETWEEN ";
             $query .= "  Str_to_date(Date_format(ADDDATE('" . $agorax . "',+" . $faixabx . "),'%Y-%m-%d 00:00:00'),";
@@ -596,11 +601,19 @@ class EntryController extends Controller
 
         if ($_union == true)
         {
-            $query.="ORDER BY dt_entry, ds_subcategory ";
-	    $query.=$pagination;
+            $query .="ORDER BY dt_entry, ds_subcategory ";
+    		//$query .= "LIMIT 0, 25 ";
         } else {
-            $query.="ORDER BY id DESC ";
-    		$query .= "LIMIT 0, 150 ";
+            if (strlen($search)) { 
+                if (strlen($dia)) { 
+                    $query.="ORDER BY vl_entry ";
+                } else {
+                    $query.="ORDER BY id DESC ";
+                }
+            } else {
+                $query.="ORDER BY id DESC ";
+            }
+    		$query .= "LIMIT 0, 25 ";
         }
 
         return $query;

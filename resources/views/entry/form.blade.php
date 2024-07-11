@@ -15,7 +15,7 @@
 <div class="row">
 	<div class="col-6">
 		<div class="form-group{{ $errors->has('ds_category') ? ' has-error' : '' }}">
-			<label for="ds_category" class="control-label col-sm-3">Description</label>
+			<label for="ds_category" class="control-label col-sm-4">Description</label>
 			<input type="text" name="ds_category" id="ds_category" class="form-control" value="{{ $register->ds_category }}" placeholder="Description...">
 			@if ($errors->has('ds_category'))
 				<span class="help-block">
@@ -26,7 +26,7 @@
 	</div>
 	<div class="col-6">
 		<div class="form-group{{ $errors->has('ds_subcategory') ? ' has-error' : '' }}">
-			<label for="ds_subcategory" class="control-label col-sm-2">Sub Desc.</label>
+			<label for="ds_subcategory" class="control-label col-sm-4">Sub Desc.</label>
 			<input type="text" name="ds_subcategory" id="ds_subcategory" class="form-control" value="{{ $register->ds_subcategory }}" placeholder="Sub Desc...">
 			@if ($errors->has('ds_subcategory'))
 				<span class="help-block">
@@ -56,7 +56,7 @@
 	</div>
 	<div class="col-6">
 		<div class="form-group">
-		<label for="vl_entry" class="control-label col-sm-2">Vl. Entry</label>
+		<label for="vl_entry" class="control-label col-sm-3">Vl. Entry</label>
 		<input type="text" name="vl_entry" id="vl_entry" class="form-control" value="{{ $register->vl_entry }}" placeholder="Vl. Entry...">
 		</div>
 	</div>
@@ -73,10 +73,10 @@
 		<div class="col-2">
 			<input type="checkbox" name="fixed_costs" class="form-check-input" {{ ($register->fixed_costs == 1 ? 'checked="checked"' : '' ) }} value="{{ $register->fixed_costs }}">&nbsp;&nbsp;&nbsp;<b>Fixed</b>
 		</div>
-		<div class="col-2">
+		<div class="col-3">
 			<input type="checkbox" name="checked" class="form-check-input" {{ ($register->checked == 1 ? 'checked="checked"' : '' ) }} value="{{ $register->checked }}">&nbsp;&nbsp;&nbsp;<b>Checked</b>
 		</div>
-		<div class="col-2">
+		<div class="col-3">
 			<input type="checkbox" name="published" class="form-check-input" {{ ($register->published == 1 ? 'checked="checked"' : '' ) }} value="{{ $register->published }}">&nbsp;&nbsp;&nbsp;<b>Published</b>
 		</div>
 	</div>

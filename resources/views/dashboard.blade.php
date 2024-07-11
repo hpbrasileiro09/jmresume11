@@ -18,6 +18,101 @@
 
     <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
-    <script src="{{ asset('js/dashboard.js') }}"></script>
+    <!--script src=" asset('js/dashboard.js') "></script-->
+
+    <script>
+    /* globals Chart:false, feather:false */
+    (function () {
+
+      'use strict'
+
+      // Graphs
+      var ctx = document.getElementById('myChart')
+
+      if (ctx != null) {
+
+        // chart colors
+        var colors = ['#E74C3C','#229954'];    
+
+        /* bar chart */
+        var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: [ {!! $meses !!} ],
+          datasets: [{
+            label: "Débito",
+            data: [ {{ $bar1 }} ],
+            backgroundColor: colors[0]
+          },
+          {
+            label: "Crédito",
+            data: [ {{ $bar2 }} ],
+            backgroundColor: colors[1]
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              barPercentage: 0.7,
+              categoryPercentage: 0.5
+            }]
+          }
+        }
+        })
+
+        // eslint-disable-next-line no-unused-vars
+        /*
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: [
+              'Sunday',
+              'Monday',
+              'Tuesday',
+              'Wednesday',
+              'Thursday',
+              'Friday',
+              'Saturday'
+            ],
+            datasets: [{
+              data: [
+                15339,
+                21345,
+                18483,
+                24003,
+                23489,
+                24092,
+                12034
+              ],
+              lineTension: 0,
+              backgroundColor: 'transparent',
+              borderColor: '#007bff',
+              borderWidth: 4,
+              pointBackgroundColor: '#007bff'
+            }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: false
+                }
+              }]
+            },
+            legend: {
+              display: false
+            }
+          }
+        })
+        */
+
+      } // if (ctx != null) ...
+
+    })()
+    </script>
+
 
 </x-app-layout>

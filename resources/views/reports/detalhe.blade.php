@@ -8,9 +8,13 @@
               <br/>
               <div class="box-tools">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <!--div id="spinnerP" class="spinner-border spinner-border-sm text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div-->
                     <a href="{{ route('entry.index') }}"><span data-feather="dollar-sign"></span></a>
                     <a href="{{ route('entry.support') }}"><span data-feather="tool"></span></a>
                     <a href="{{ route('time.index') }}"><span data-feather="calendar"></span></a>
+                    <a href="{{ route('param.edit', 1) }}"><span data-feather="settings"></span></a>
                     <a href="{{ route('entry.create') }}"><span data-feather="plus-square"></span></a>
                 </div>
               </div>
@@ -199,7 +203,7 @@
                 $nov = Array();
                 $dez = Array();
 
-        $geral = Array();
+                $geral = Array();
 
                 foreach($categoriesD as $category)
                 {
@@ -510,7 +514,7 @@
                     <div class="modal-body">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <table id="grid" class="table table-striped table-hover">    
+                                <table id="grid" class="table table-bordered table-striped table-hover">    
                                     <thead>
                                         <tr>
                                             <th scope="col">Data</th>
@@ -523,13 +527,17 @@
                                             <td align="center" colspan="5">&nbsp;</td>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>                    
                     </div>
                     <div class="modal-footer">
+                        <div id="spinnerH" class="spinner-border spinner-border-sm text-dark" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <!--button type="button" class="btn btn-primary">Save changes</button-->
                     </div>
                     </div>
                 </div>
@@ -573,6 +581,7 @@
         var total = 0.0;
         var path = $(this).attr("path");
 
+        $('#spinnerH').show();
         $('#grid tr:gt(0)').remove();
 
         $.ajax({
@@ -592,10 +601,12 @@
                     linhas += "</tr>";                      
                     $("#grid").append(linhas);                    
                 });
+                $('#spinnerH').hide();
             },       
             error: function(jqXHR, textStatus, errorThrown) {  
                 //$("#msg").html('failure! please verify');
                 console.log('failure! please verify');
+                $('#spinnerH').hide();
             }              
         });         
 

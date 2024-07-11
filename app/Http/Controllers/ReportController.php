@@ -237,6 +237,8 @@ class ReportController extends Controller
 
         $debitos = DB::connection('mysql')->select($query);
 
+        $spinnerp = "$(\'#spinnerP\').hide();";
+
         return view($this->path_view . '.detalhe', 
             compact(
                 'tprev',
@@ -248,7 +250,8 @@ class ReportController extends Controller
                 'debitos',
                 'creditos',
                 'total12',
-                'apoio'
+                'apoio',
+                'spinnerp',
             ));    
 
     }
@@ -307,8 +310,8 @@ class ReportController extends Controller
         $query .= "   j.dt_entry, ";
         $query .= "   COALESCE(DATE_FORMAT(j.dt_entry, '%d/%m'),'') AS dt_entry_br, "; 
         $query .= "   j.vl_entry, ";
-        $query .= "   j.ds_category, ";
-        $query .= "   j.ds_subcategory, ";
+        $query .= "   j.ds_category AS ds_category, ";
+        $query .= "   CASE WHEN ISNULL(j.ds_subcategory) = 1 THEN '' ELSE j.ds_subcategory END AS ds_subcategory, ";
         $query .= "   j.status, ";
         $query .= "   j.fixed_costs, ";
         $query .= "   j.checked, ";

@@ -8,7 +8,8 @@
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
            <a href="{{ route('time.index') }}"><span data-feather="calendar"></span></a>
            <a href="{{ route('entry.support') }}"><span data-feather="tool"></span></a>
-            <a href="{{ route('entry.create') }}"><span data-feather="plus-square"></span></a>
+           <a href="{{ route('param.edit', 1) }}"><span data-feather="settings"></span></a>
+           <a href="{{ route('entry.create') }}"><span data-feather="plus-square"></span></a>
         </div>
 
         <table class="table table-bordered table-striped mt-4">

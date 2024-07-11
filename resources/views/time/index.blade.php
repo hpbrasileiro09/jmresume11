@@ -1,6 +1,6 @@
 <x-app-layout>
 
-<div class="card mt-5">
+<div class="card mt-5" style="background-color: #EDEBB1;">
   <h2 class="card-header">Times</h2>
   <div class="card-body">
           
@@ -8,6 +8,7 @@
            <a href="{{ route('entry.index') }}"><span data-feather="dollar-sign"></span></a>
            <a href="{{ route('entry.support') }}"><span data-feather="tool"></span></a>
            <!--a href="{{ route('time.index') }}"><span data-feather="calendar"></span></a-->
+           <a href="{{ route('param.edit', 1) }}"><span data-feather="settings"></span></a>
            <a href="{{ route('entry.create') }}"><span data-feather="plus-square"></span></a>
         </div>
 

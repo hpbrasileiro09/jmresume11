@@ -31,6 +31,12 @@
               Report
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('param.edit', 1) }}">
+              <span data-feather="settings"></span>
+              Param
+            </a>
+          </li>
         </ul>
 
       </div>
