@@ -120,11 +120,32 @@
 
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
-    <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+    <h5 id="offcanvasRightLabel">Params</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    ...
+    <form action="{{ route('param.update', 1) }}" class="form-horizontal" method="post">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="tipo" value="2">
+        {!! csrf_field() !!}
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group{{ $errors->has('agora') ? ' has-error' : '' }}">
+                    <label for="agora" class="control-label col-sm-4">Now</label>
+                    <input type="date" name="agora" id="agora" class="form-control" value="{{ $agorax }}" placeholder="Now...">
+                    @if ($errors->has('agora'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('agora') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <br />
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </form>
   </div>
 </div>
 

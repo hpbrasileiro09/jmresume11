@@ -33,8 +33,12 @@ class ParamController extends Controller
 
         $valor = $register->value;
 
-        return view($this->path_view . '.edit', 
-            compact('register', 'page_header', 'valor'));        
+        $ano = 2025;
+        $mes = 1;
+        $times = 5;
+
+        return view('param.edit', 
+            compact('register', 'page_header', 'valor', 'ano', 'mes', 'times'));        
     }
 
     public function update(Request $request, string $id)
@@ -60,7 +64,53 @@ class ParamController extends Controller
         session(['kind' => $kind]);
         session(['msg' => $msg]);
 
+        $tipo = $request->input('tipo');
+
+        if ($tipo == 1) return response()->redirectToRoute('entry.index');        
+        
+        if ($tipo == 2) return response()->redirectToRoute('entry.support');        
+        
         return response()->redirectToRoute('entry.index');        
+    }    
+
+    public function generate(Request $request)
+    {
+
+        //echo "Teste_" . \Request::get('ano');
+        //exit(0);
+
+        $validator = Validator::make($request->all(), [
+            'ano' => 'required',
+            'mes' => 'required',
+            'times' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect($this->path_view . '/' . $id . '/edit')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $kind = 1;
+        $msg = 'registers was generated successfully';
+
+        session(['kind' => $kind]);
+        session(['msg' => $msg]);
+
+        $ano = $request->input('ano');
+        $mes = $request->input('mes');
+        $times = $request->input('times');
+
+        $retorno = Array();
+        $retorno[] = Array('kind', $kind);
+        $retorno[] = Array('msg', $msg);
+        $retorno[] = Array('ano', $ano);
+        $retorno[] = Array('mes', $mes);
+        $retorno[] = Array('times', $times);
+       
+        return $retorno;
+
+        return response()->redirectToRoute('path.edit');        
     }    
 
 }

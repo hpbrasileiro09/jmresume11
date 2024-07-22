@@ -18,7 +18,7 @@
 
 <div class="row">
 
-<div class="col-md-5 col-sm-5">
+<div class="col-md-6 col-sm-6">
 
     {!! csrf_field() !!}
 
@@ -95,9 +95,9 @@
       </div>
     </div>
 
-  </div> <!--div class="col-xs-4"-->
+  </div> <!--div class="col-xs-6"-->
 
-<div class="col-md-7 col-sm-7">
+<div class="col-md-6 col-sm-6">
 
       <input type="button" value="Recalcular" style="display: none; float: right;margin-top: 20px;" id="form-calcula" class="btn btn-primary" />
 

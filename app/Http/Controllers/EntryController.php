@@ -75,7 +75,8 @@ class EntryController extends Controller
                 'search',
                 'alert',
                 'm_categories',
-                'rb_modal'
+                'rb_modal',
+                'agorax',
             ));    
 
     }
@@ -321,6 +322,7 @@ class EntryController extends Controller
                 'search',
                 'alert',
                 'dia',
+                'agorax'
             ));    
 
     }

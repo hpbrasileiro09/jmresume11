@@ -6,6 +6,7 @@
   <div class="card-body">
           
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+           <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><span data-feather="arrow-left-circle"></span></a>
            <a href="{{ route('time.index') }}"><span data-feather="calendar"></span></a>
            <a href="{{ route('entry.support') }}"><span data-feather="tool"></span></a>
            <a href="{{ route('param.edit', 1) }}"><span data-feather="settings"></span></a>
@@ -126,6 +127,37 @@
         
   </div>
 </div>  
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">Params</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <form action="{{ route('param.update', 1) }}" class="form-horizontal" method="post">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="tipo" value="1">
+        {!! csrf_field() !!}
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group{{ $errors->has('agora') ? ' has-error' : '' }}">
+                    <label for="agora" class="control-label col-sm-4">Now</label>
+                    <input type="date" name="agora" id="agora" class="form-control" value="{{ $agorax }}" placeholder="Now...">
+                    @if ($errors->has('agora'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('agora') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <br />
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </form>
+  </div>
+</div>
 
 <style>
 .ln-warning {

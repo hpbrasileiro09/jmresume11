@@ -29,7 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('entry', EntryController::class);
     Route::get('/lastcat', [EntryController::class, 'lastcat'])->name('entry.lastcat');
     Route::resource('/time', TimeController::class,['except' => ['create','destroy']]);
-    Route::resource('/param', ParamController::class,['except' => ['create','destroy']]);
+    Route::resource('/param', ParamController::class,['except' => ['create','destroy','show']]);
+	Route::get('/param/generate', [ParamController::class, 'generate'])->name('param.generate');
 	Route::get('/reports/detalhe', [ReportController::class, 'detalhe'])->name('reports.detalhe');
 	Route::get('/reports/lupa', [ReportController::class, 'lupa'])->name('reports.lupa');
     Route::get('/entries_csv', [EntryController::class, 'entries_csv'])->name('entry.csv');
