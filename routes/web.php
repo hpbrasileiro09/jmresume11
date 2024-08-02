@@ -6,6 +6,9 @@ use App\Http\Controllers\TimeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ParamController;
 use App\Http\Controllers\DashBoardController;
+use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\CardsController;
+use App\Http\Controllers\ToolsController;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
@@ -37,6 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/all_entries_csv', [EntryController::class, 'all_entries_csv'])->name('allentry.csv');
     Route::get('/categories_arr', [EntryController::class, 'categories_arr'])->name('category.arr');
     Route::get('/all_categories_csv', [EntryController::class, 'all_categories_csv'])->name('allcategory.csv');
+    Route::get('/payments', [PaymentsController::class, 'index'])->name('payments.index');
+    Route::get('/cards', [CardsController::class, 'index'])->name('cards.index');
+    Route::get('/tools', [ToolsController::class, 'index'])->name('tools.index');
 });
 
 require __DIR__.'/auth.php';

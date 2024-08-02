@@ -37,6 +37,24 @@
               Param
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('payments.index') }}">
+              <span data-feather="box"></span>
+              Payments
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('cards.index') }}">
+              <span data-feather="credit-card"></span>
+              Cards
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('tools.index') }}">
+              <span data-feather="codesandbox"></span>
+              Tools
+            </a>
+          </li>
         </ul>
 
       </div>

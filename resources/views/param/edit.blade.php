@@ -41,6 +41,7 @@
 </div> <!--div class="col-X"-->
 <div class="col-6">
 
+<!--
 <div class="card mt-5" style="background-color: yellow;">
   <h2 class="card-header">Generate Entries</h2>
   <div class="card-body">
@@ -96,7 +97,8 @@
         </div>
     </form>
   </div>
-</div>  
+</div>
+-->  
 
 </div>
 </div> <!--div class="row"-->

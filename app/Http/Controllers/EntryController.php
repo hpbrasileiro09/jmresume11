@@ -615,7 +615,7 @@ class EntryController extends Controller
             } else {
                 $query.="ORDER BY id DESC ";
             }
-    		$query .= "LIMIT 0, 25 ";
+    		$query .= "LIMIT 0, 40 ";
         }
 
         return $query;

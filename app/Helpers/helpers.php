@@ -437,6 +437,21 @@ function MontaCartoes($mat, $card)
     return $html;
 }
 
+function MontaCards($mat, $card)
+{
+    $html = "";
+    $html .= '<select class="form-select" name="day" id="day" placeholder="cards">';
+    foreach ($mat as $v) {
+    if ($card == $v['day']) {
+        $html .= "<option selected=\"selected\" value=\"" . $v['day'] . "\">" . $v['nome'] . "</option>";
+    } else {
+        $html .= "<option value=\"" . $v['day'] . "\">" . $v['nome'] . "</option>";
+    }
+    }
+    $html .= "</select>";
+    return $html;
+}
+
 function MontaDrop($_label, $_mat, $_value)
 {
     $html = "";
@@ -541,6 +556,19 @@ function trataValorA($pvalor, $ano, $mes, $cat, $deb=0, $vl_prev=0)
   $_return = "<font style='float: right; font-size:11px;' color='" . $cor . "'>" . $resp . "</font>"; 
   if (!$vl_prev) $_return = '<a href="#myModalX" path="'.$path.'" role="button" data-bs-toggle="modal" data-bs-target="#myModalX">'.$_return.'</a>';      
   return $_return;
+}
+
+function getNmCategory($categories, $id) 
+{
+    $resp = '';
+    foreach ($categories as $item) {
+        if ($item->id == $id) {
+            $resp = $item->name . " (" . $item->id . ")|" . $item->type;
+            break;
+        }
+    }    
+    $mat0 = explode("|", $resp); 
+    return $mat0;
 }
 
 ?>
