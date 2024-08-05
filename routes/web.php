@@ -17,11 +17,11 @@ use App\Models\Param;
 use App\Models\Entry;
 use App\Models\Category;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/welcome', function () {
+    return view('dashboard');
 });
 
-Route::get('/dashboard', [DashBoardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');;
+Route::get('/', [DashBoardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
