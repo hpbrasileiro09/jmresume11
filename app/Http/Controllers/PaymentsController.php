@@ -53,8 +53,8 @@ class PaymentsController extends Controller
         $payments .= "- Visa 08/".$mes." | Dia Bom 01 |>\n";
         $payments .= "- Golden Place 05/".$mes." |> (recebi mas falta chegar no banco)\n";
         $payments .= "- Mercado 10/".$mes." | Dia Bom 02 |>\n";
-        $payments .= "- Campana 10/".$mes." | R$ 92.00 (3 de 3) |\n";
-        $payments .= "- Vivo Fibra 17/".$mes." |> 10/08 e-mail deve chegar |> R$ 150.00 |\n";
+        $payments .= "- Vivo Fibra 17/".$mes." |> 10/".$mes." e-mail deve chegar |> R$ 150.00 |\n";
+        $payments .= "- Sesi Ristorante 18/".$mes." |> R$ 260.00 |\n";
         $payments .= "- Unimed 31/".$mes." |> 08/".$mes." gera o Boleto |> (verificar e-mail Rosana) |\n";
         $payments .= "- Vivo Controle 02/".$mes." | Débito Automático |> R$ 35.50\n";
         $payments .= "- Mastercard Multiplo 15/".$mes." | Débito Automático | Dia Bom 06 |>\n";
