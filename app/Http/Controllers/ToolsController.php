@@ -79,8 +79,9 @@ class ToolsController extends Controller
         $registers[] = Array( 'id' => 7,  'id_category' => 119, 'vencimento' => 15, 'ds_category' => 'Netflix',                 'vl_entry' => -44.9,    'ds_subcategory' => 'Mastercard' );
         $registers[] = Array( 'id' => 8,  'id_category' => 132, 'vencimento' => 15, 'ds_category' => 'Vivo Controle',           'vl_entry' => -35.5,    'ds_subcategory' => '' );
         $registers[] = Array( 'id' => 9,  'id_category' => 133, 'vencimento' => 15, 'ds_category' => 'Vivo Fibra',              'vl_entry' => -150.0,   'ds_subcategory' => '' );
-        $registers[] = Array( 'id' => 10, 'id_category' => 99,  'vencimento' => 21, 'ds_category' => 'Luz Golden Place',        'vl_entry' => -260.0,   'ds_subcategory' => '' );
-        $registers[] = Array( 'id' => 11, 'id_category' => 140, 'vencimento' => 28, 'ds_category' => 'Unimed',                  'vl_entry' => -850.0,   'ds_subcategory' => '' );
+        $registers[] = Array( 'id' => 10, 'id_category' => 106, 'vencimento' => 17, 'ds_category' => 'Sesi Ristorante',         'vl_entry' => -260.0,   'ds_subcategory' => '' );
+        $registers[] = Array( 'id' => 11, 'id_category' => 99,  'vencimento' => 21, 'ds_category' => 'Luz Golden Place',        'vl_entry' => -260.0,   'ds_subcategory' => '' );
+        $registers[] = Array( 'id' => 12, 'id_category' => 140, 'vencimento' => 28, 'ds_category' => 'Unimed',                  'vl_entry' => -850.0,   'ds_subcategory' => '' );
 
         /*
         86 Mercado
@@ -100,7 +101,7 @@ class ToolsController extends Controller
 
         if ($update == 'on') {
 
-            $grava = 0;
+            $grava = 1;
 
             $year = \Request::get('year');
             $month = \Request::get('month');

@@ -80,7 +80,14 @@
           <input type='text' class="form-control" style='text-align: right;' name='vl_entry' id='vl_entry' value='<?php echo $vlTotal; ?>'  placeholder='vl_entry' />
         </div>
       </div>
-      <div class="col-8">
+      <div class="col-4">
+        <div class="form-group">
+          <label for="vl_parcela" class="control-label text-nowrap">Valor Parcela</label>
+          <input type='text' class="form-control" style='text-align: right;' name='vl_parcela' id='vl_parcela' value='<?php echo $vlTotal; ?>'  placeholder='vl_parcela' />
+        </div>
+      </div>
+      <div class="col-4">
+        <input type="button" value="Total" id="calcula-total" style="margin-top: 20px;" class="btn btn-warning" />
       </div>
     </div>
     <div class="row">
@@ -92,6 +99,7 @@
         </div>
       </div>
       <div class="col-6">
+        <input type="button" value="Recalcular" style="display: none; float: right;margin-top: 20px;" id="form-calcula" class="btn btn-primary" />
       </div>
     </div>
 
@@ -191,6 +199,14 @@
 
     $('#form-parcelas').click(function() {
         geraParcelas();
+    });
+
+    $('#calcula-total').on('click', function() {
+      var $fParcela = 0.0;
+      var $sParcela = $('#fparcela select[id=times]').val();
+      var $sVlParcela = $('#fparcela input:text[id=vl_parcela]').val();
+      $fParcela = roundTo2Decimals($sVlParcela);
+      $('#vl_entry').val(roundTo2Decimals(parseFloat($fParcela * $sParcela)));
     });
 
     $('#form-calcula').on('click', function() {
@@ -293,6 +309,9 @@
             $dataH += "</td>";
             $dataH += "</tr>";
             $total += roundTo2Decimals($sVlParcela);
+            if ($x == 1) {
+              $('#fparcela input:text[id=vl_parcela]').val(roundTo2Decimals($sVlParcela));
+            }
             $("#grid").append($dataH);
         }
 

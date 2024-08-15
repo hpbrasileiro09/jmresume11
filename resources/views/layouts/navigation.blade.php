@@ -16,7 +16,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ route('time.index') }}">
               <span data-feather="calendar"></span>
-              Time
+              Times
             </a>
           </li>
           <li class="nav-item">
