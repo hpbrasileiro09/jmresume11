@@ -99,15 +99,12 @@
         </div>
       </div>
       <div class="col-6">
-        <input type="button" value="Recalcular" style="display: none; float: right;margin-top: 20px;" id="form-calcula" class="btn btn-primary" />
       </div>
     </div>
 
   </div> <!--div class="col-xs-6"-->
 
 <div class="col-md-6 col-sm-6">
-
-      <input type="button" value="Recalcular" style="display: none; float: right;margin-top: 20px;" id="form-calcula" class="btn btn-primary" />
 
       <table id="grid" class="table table-striped table-hover ">
         <thead>
@@ -123,7 +120,11 @@
           <td align="center" colspan="5">&nbsp;</td>
         </tr>
       </table>
-                    
+
+      <div>
+        <input type="button" value="Recalcular" style="display: none; float: left;margin-top: 20px;" id="form-calcula" class="btn btn-warning" />
+      </div>
+
       <div id="botao_salvar" style="display: none; float: right; padding-top: 20px;">
         <button id="submitp" class="btn btn-primary button_submit">Save changes</button>
       </div>
