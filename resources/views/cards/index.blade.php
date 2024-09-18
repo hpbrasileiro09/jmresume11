@@ -24,7 +24,7 @@
 </div> <!-- div class="card mt-5" ... -->  
 
 </div> <!--div class="col-X"-->
-<div class="col-10">
+<div class="col-6">
 
 <table class="table table-bordered table-striped mt-4">
     <thead>
@@ -33,6 +33,7 @@
     <th></th>
     <th>Date</th>
     <th>Description</th>
+    <th></th>
     <th><font style='float: right;'>Value</font></th>
     <th><font style='float: right;'>Total</font></th>
     </tr>
@@ -71,7 +72,7 @@
 
     $linhas = "";
     $linhas .= "<tr class='ln-info'>";
-    $linhas .= "<td colspan='8' align='right'>".getMonth($mes)."</td>";
+    $linhas .= "<td colspan='9' align='right'>".getMonth($mes)."</td>";
     $linhas .= "</tr>";
     echo $linhas;
     }
@@ -102,16 +103,18 @@
     }
 
     ?>
-    <tr >
+    <tr>
     <td>
-    <a style="text-decoration: none;" href="{{ route('entry.edit', $register->id) }}">
-      <span data-feather="edit"></span>
-    </a>
     <input class="form-check-input xcheck_ chkBX" class="form-control" type="checkbox" value="<?php echo $register->id; ?>" id="chkbox" name="chkbox">
     </td>
     <td><?php echo trataDDS($register->dia_da_semana) ?></td>
     <td><?php echo trataDDS11($register->dt_entry_br) ?></td>
     <td><?php echo trataTexto($register->ds_category,11)."&nbsp;".trataTexto($register->ds_subcategory,11)."&nbsp;".$_cartao."&nbsp;".trataTexto($register->nm_category,11) ?></td>
+    <td>    
+      <a style="text-decoration: none;" href="{{ route('entry.edit', $register->id) }}">
+        <span data-feather="edit"></span>
+      </a>
+    </td>
     <td><?php echo trataValor($register->vl_entry, 0) ?></td>
     <td>
       <?php echo trataValor($total, 0) ?>

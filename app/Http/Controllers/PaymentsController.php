@@ -44,15 +44,17 @@ class PaymentsController extends Controller
         $month = ($month == 0 ? date('m') : $month);
         $months = getYearMonths();
 
-        if ($month+1 == 13) $month = 0;
-        $mes = (($month+1) >= 10 ? ($month+1) : "0".($month+1));
+        //if ($month+1 == 13) $month = 0;
+        //$mes = (($month+1) >= 10 ? ($month+1) : "0".($month+1));
+
+        $mes = (($month) > 9 ? ($month) : "0".($month));
 
         $payments = "";
         $payments .= ".:Pagamentos:.\n";
         $payments .= "- Sesi 10/".$mes." |>\n";
         $payments .= "- Visa 08/".$mes." | Dia Bom 01 |>\n";
         $payments .= "- Golden Place 05/".$mes." |> (recebi mas falta chegar no banco)\n";
-        $payments .= "- Mercado 10/".$mes." | Dia Bom 02 |>\n";
+        //$payments .= "- Mercado 10/".$mes." | Dia Bom 02 |>\n";
         $payments .= "- Vivo Fibra 17/".$mes." |> 10/".$mes." e-mail deve chegar |> R$ 150.00 |\n";
         $payments .= "- Sesi Ristorante 18/".$mes." |> R$ 260.00 |\n";
         $payments .= "- Unimed 31/".$mes." |> 08/".$mes." gera o Boleto |> (verificar e-mail Rosana) |\n";
