@@ -46,8 +46,9 @@ class PaymentsController extends Controller
 
         //if ($month+1 == 13) $month = 0;
         //$mes = (($month+1) >= 10 ? ($month+1) : "0".($month+1));
-
-        $mes = (($month) > 9 ? ($month) : "0".($month));
+        //$mes = (($month) > 9 ? ($month) : "0".($month));
+        
+        $mes = $month;
 
         $payments = "";
         $payments .= ".:Pagamentos:.\n";

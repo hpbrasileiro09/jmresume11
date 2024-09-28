@@ -41,6 +41,7 @@
                       <select class="form-select pull-right" name="action_choice" id="action_choice">
                         <option value="1">Update</option>
                         <option value="2">Delete</option>
+                        <option value="3">Copy</option>
                       </select>
                   </div>
                 </form>
@@ -103,7 +104,7 @@
 				@endforeach
 
         <input type="hidden" id="bag" name="bag" value="">
-        <input type="hidden" id="action" name="action" value="1">
+        <input type="text" id="action" name="action" value="1">
 
       </form>
 
@@ -182,6 +183,11 @@
 
     $('.chkBX').on('change', function() {
       verifyChk();
+    });
+
+    $('#action_choice').on('change', function() {
+        var iAction = $(this).val();
+        $('#action').val(iAction);
     });
 
     $('#select_all_').on('change', function() {

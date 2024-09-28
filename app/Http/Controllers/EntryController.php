@@ -390,7 +390,7 @@ class EntryController extends Controller
                 $register = Entry::findOrFail($item);
                 //\Storage::append('jmresume.log', "Entry [".$item."]");
                 //\Storage::append('jmresume.log', "Entry [".print_r($tresp, true)."]");
-                if ($action == "1")
+                if ($action == "1") // update
                 {
                     $register->id_category = $id_category;
                     $register->dt_entry = $dt_entry;
@@ -405,10 +405,27 @@ class EntryController extends Controller
                     //\Storage::append('jmresume.log', "Entry [".$item."] Save");
                     $i += 1;
                 }
-                if ($action == "2")
+                if ($action == "2") // delete
                 {
                     $register->delete();
                     //\Storage::append('jmresume.log', "Entry [".$item."] Delete");
+                    $i += 1;
+                }
+                if ($action == "3") // copy
+                {
+                    Entry::create([
+                        'id_category' => $id_category,
+                        'dt_entry' => $dt_entry,
+                        'vl_entry' => $vl_entry,
+                        'nm_entry' => '',
+                        'ds_category' => $ds_category,
+                        'ds_subcategory' => $ds_subcategory,
+                        'status' => $status,
+                        'fixed_costs' => $fixed_costs,
+                        'checked' => $checked,
+                        'published' => $published,
+                        'ds_detail' => '',
+                    ]);
                     $i += 1;
                 }
             } catch(ModelNotFoundException $ex) {
@@ -417,15 +434,17 @@ class EntryController extends Controller
             $icont += 1;
         }   
 
+        $_action = ($action == "1" ? "updated" : ($action == "2" ? "deleted" : "copied"));
+
         if ($i > 0)
         {
             $kind = 1;
-            $msg = $i . " register(s) were " . ($action == "1" ? "updated" : "deleted") . " from " . $icont . " successfully";
+            $msg = $i . " register(s) were " . $_action . " from " . $icont . " successfully";
             session(['kind' => $kind]);
             session(['msg' => $msg . "(" . $action . ")"]);
         } else {
             $kind = 3;
-            $msg = "Neither register(s) weren't " . ($action == "1" ? "updated" : "deleted") . " from " . $icont . " selected";
+            $msg = "Neither register(s) weren't " . $_action . " from " . $icont . " selected";
             $msg .= "<br/>I[".join(",",$itens)."]";
             $msg .= "<br/>M[".$mat."]";
             $msg .= "<br/>A[".$action."]";
